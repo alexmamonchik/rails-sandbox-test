@@ -1,38 +1,29 @@
 <div>
-  <h1 class="">Posts</h1>
+  <h1 class="text-3xl">Posts</h1>
 
   <%= link_to("New Post", new_post_path) %>
-  <% if user_signed_in? %>
-    <%= button_to("Log Out", destroy_user_session_path, method: :delete) %>
-  <% end %>
 
-  <div class="posts mx-auto mt-10 flex">
-    <article class="basis-1/3">
-      <div class="">
-        <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-      </div>
-      <div class="group relative">
-        <h3 class="">
-          <a href="#">
-            <span class="absolute inset-0"></span>
-            Boost your conversion rate
-          </a>
-        </h3>
-        <p class="">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-      </div>
-      <div class="">
-        <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="h-10 w-10 rounded-full bg-gray-50">
-        <div class="text-sm leading-6">
-          <p class="font-semibold text-gray-900">
-            <a href="#">
-              <span class="absolute inset-0"></span>
-              Michael Foster
-            </a>
-          </p>
-          <p class="text-gray-600">Co-Founder / CTO</p>
+  <div class="posts mx-auto mt-10">
+    <% @posts.each_with_index do |post, index| %>
+      <article class="flex w-100 rounded-lg border border-slate-300 p-2 mb-2">
+        <div class="date-box mr-2">
+          <div><%= post.created_at.strftime("%b %d") %></div>
+          <div class="text-xl"><%= post.created_at.strftime("%Y") %></div>
         </div>
-      </div>
-    </article>
-
+        <div class="flex-col grow">
+          <h3 class="text-xl w-full">
+            <%= link_to(post.title, post_path(post)) %>
+          </h3>
+          <p class="block">
+            <%= truncate(post.body) { link_to("... read", post_path(post)) } %>
+          </p>
+        </div>
+        <div class="pt-2">
+          <p class="font-semibold text-gray-900">
+              <%= post.author %>
+          </p>
+        </div>
+      </article>
+    <% end %>
   </div>
 </div>

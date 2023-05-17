@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="container px-4 md:px-0 max-w-6xl mx-auto">
+    <nav class="flex justify-around">
+      <%= link_to "Posts", posts_path, class: "flex" %>
+      <a class="flex">Logs</a>
+      <% if user_signed_in? %>
+        <%= button_to("Log Out", destroy_user_session_path, method: :delete) %>
+      <% end %>
+    </nav>
+    <main>
       <%= yield %>
     </main>
   </body>

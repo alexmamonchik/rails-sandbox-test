@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: %w[index view]
-  before_action :_post, only: :view
+  before_action :authenticate_user!, except: %w[index show]
+  before_action :_post, only: :show
   def index
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
   end
 
   def new
@@ -24,7 +24,7 @@ class PostsController < ApplicationController
     end
   end
 
-  def view;end
+  def show;end
 
   private
 
